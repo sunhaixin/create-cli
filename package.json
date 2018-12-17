@@ -1,0 +1,22 @@
+{
+  "name": "react-cli",
+  "version": "0.0.1",
+  "description": "Command line interface rapid React.js development",
+  "main": "index.js",
+  "keywords": [
+    "react-cli"
+  ],
+  "scripts": {
+    "dev": "node ./bin/react.js"
+  },
+  "author": "sealin",
+  "license": "ISC",
+  "bin": {
+    "react": "bin/react.js"
+  },
+  "devDependencies": {
+    "commander": "^2.19.0",
+    "download-git-repo": "^1.1.0",
+    "ora": "^3.0.0"
+  }
+}
