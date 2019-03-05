@@ -14,7 +14,7 @@
   "bin": {
     "react-cli": "bin/react.js"
   },
-  "devDependencies": {
+  "dependencies": {
     "commander": "^2.19.0",
     "download-git-repo": "^1.1.0",
     "ora": "^3.0.0"
