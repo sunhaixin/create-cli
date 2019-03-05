@@ -12,7 +12,7 @@
   "author": "sealin",
   "license": "ISC",
   "bin": {
-    "react-cli": "bin/react.js"
+    "react": "bin/react.js"
   },
   "dependencies": {
     "commander": "^2.19.0",
