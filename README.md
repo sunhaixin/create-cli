@@ -1,7 +1,7 @@
 # React-cli
 
 ### 配置
-`npm install @sealin/react-cli -g`
+`npm install -g git+https://github.com/sunhaixin/react-cli.git`
 
 ### 使用
-`react-cli init <project-name>`
+`react init <project-name>`
