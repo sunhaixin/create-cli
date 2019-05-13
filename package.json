@@ -7,7 +7,7 @@
     "react-cli"
   ],
   "scripts": {
-    "dev": "node ./bin/react.js"
+    "dev": "node ./bin/react.js init ../temp"
   },
   "author": "sealin",
   "license": "ISC",
@@ -15,8 +15,10 @@
     "react": "bin/react.js"
   },
   "dependencies": {
+    "colors": "^1.3.3",
     "commander": "^2.19.0",
     "download-git-repo": "^1.1.0",
-    "ora": "^3.0.0"
+    "ora": "^3.0.0",
+    "prompt": "^1.0.0"
   }
 }

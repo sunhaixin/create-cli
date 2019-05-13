@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 
 const program = require('commander')
-const package = require('../package.json')
+const packageJson = require('../package.json')
 
-program.version(package.version)
-  .usage('<command> [project-name]')
-  .description('test')
-  .command('init', 'create a new project')
+program
+  .option('init', 'create a new project')
+  .version(packageJson.version, '-v, --version')
+  .parse(process.argv)
 
 program.on('--help', () => {
   console.log('')
@@ -14,4 +14,4 @@ program.on('--help', () => {
   console.log('  $react init project-name')
 })
 
-program.parse(process.argv)
+require('./react-init')
