@@ -13,6 +13,5 @@ program.on('--help', () => {
   console.log('Examples:')
   console.log('  $ create-app vue project-name')
 })
-console.log('----args', program.args)
 
 require('./init')
