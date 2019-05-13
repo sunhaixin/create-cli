@@ -7,7 +7,7 @@
     "react-cli"
   ],
   "scripts": {
-    "dev": "node ./bin/react.js init ../temp"
+    "dev": "node ./bin/react.js init projectName"
   },
   "author": "sealin",
   "license": "ISC",
