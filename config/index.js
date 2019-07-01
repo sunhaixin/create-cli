@@ -8,6 +8,5 @@ module.exports = {
     authorID: 'sunhaixin',
     templateName: 'vue-template',
     branch: 'master',
-  },
-  'support': ['react', 'vue']
+  }
 }

@@ -1,5 +1,4 @@
 const program = require('commander')
-const ora = require('ora')
 const fs = require('fs')
 const path = require('path')
 const prompt = require('prompt')
@@ -7,58 +6,77 @@ const colors = require('colors')
 const download = require('../lib/download')
 const CONFIG = require('../config')
 
-
 class Init {
   constructor () {
+    this.firstSchemaConfirm = {
+      name: 'confirm',
+      description: ''
+    }
+    this.secondSchemaConfirm = {
+      name: 'projectName',
+      description: colors.reset('请重新输入项目名称')
+    }
+    this.type = 'react'
     this.start()
   }
 
   start () {
-    const support = CONFIG.support
     const [type, projectName] = program.args
-    const isSuppoerted = (support.indexOf(type)) > -1
+    const isSuppoerted = Object.getOwnPropertyNames(CONFIG).indexOf(type) > -1
 
-    if (!isSuppoerted) {
-      console.log(colors.red('Error: 暂不支持该类型框架！'))
+    if (!type) {
+      console.log(colors.red('Error: 请输入模版类型'))
       return
     }
 
-    const schemaConfirm = {
-      name: 'confirm',
-      description: colors.reset(`确定使用 ${projectName} 为项目名称？ y/n`)
-    }
-    const schemaProjectName = {
-      name: 'projectName',
-      description: colors.reset('请重新输入项目名称')
+    if (!isSuppoerted) {
+      console.log(colors.red('Error: 暂不支持该类型框架'))
+      return
     }
 
+    this.type = type
+
     prompt.start()
-    prompt.get(schemaConfirm, (err, confirmRes) => {
+    this.promptget(projectName)
+  }
+
+  promptget (projectName) {
+    if (!projectName) {
+      this.firstSchemaConfirm.description = colors.reset('确定在 当前目录 创建项目？ y/n')
+    } else {
+      this.firstSchemaConfirm.description = colors.reset(`确定使用 ${projectName} 为项目名称？ y/n`)
+    }
+    prompt.get(this.firstSchemaConfirm, (err, confirmRes) => {
+      if (err) { return }
+
       if (confirmRes && (confirmRes.confirm === 'y' || confirmRes.confirm === '')) {
-        this.resolve(projectName, type)
+        this.resolve(projectName)
       } else {
-        prompt.get(schemaProjectName, (err, projectNameRes) => {
-          if (projectNameRes && projectNameRes.projectName) {
-            this.resolve(projectNameRes.projectName, type)
+        prompt.get(this.secondSchemaConfirm, (err, projectNameRes) => {
+          if (err) { return }
+          if (projectNameRes) {
+            this.promptget(projectNameRes.projectName)
           }
         })
       }
     })
   }
 
-  resolve (projectName, type) {
+  resolve (projectName) {
+    projectName = projectName ? projectName : ''
     const projectPath = path.resolve(process.cwd(), projectName)
-    const isExistDir = fs.existsSync(projectPath)
+    const isExistDir = projectName && fs.existsSync(projectPath)
 
     if (isExistDir) {
       console.log('当前项目已存在！')
       process.exit(1)
     }
 
-    ora({ color: 'yellow', text: 'Creating Directory...' })
-    fs.mkdirSync(projectPath)
+    if (projectName) {
+      fs.mkdirSync(projectPath)
+    }
 
-    const config = CONFIG[type]
+    const config = CONFIG[this.type]
 
     download(projectPath, config)
       .then(() => {
